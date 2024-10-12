@@ -1,0 +1,83 @@
+{% load static %}
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>読書ログアプリ</title>
+  <link rel="stylesheet" href="{% static 'reading_log/css/reset.css' %}">
+  {% bootstrap_css %}
+  <link rel="stylesheet" href="{% static 'reading_log/css/style.css' %}">
+  {% bootstrap_javascript %}
+  {% block extrajs %}{% endblock %}
+</head>
+
+<body>
+  <header class="">
+    <nav class="navbar navbar-expand flex-md-row navbar-light bg-light p-4">
+      <div class="container justify-content-between">
+      読書ログアプリ
+
+      <ul class="navbar-nav me-auto">
+        {% if user.is_authenticated %}
+        <li class="ml-5">
+          <a href="{% url 'reading_log:individual_log' user.id %}">読書ログ一覧</a>
+        </li>
+        <li class="ml-5">
+          <a href="{% url 'reading_log:dashboard' user.id %}">ダッシュボード</a>
+        </li>
+        <li class="ml-5">
+          <a href="{% url 'reading_log:reading_log_create'%}">読書ログ追加</a>
+        </li>
+        <li class="ml-5">
+          <a href="{% url 'reading_log:book_create'%}">書籍追加</a>
+        </li>
+        {% endif %}
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+        <li class="ml-5">{{  user.username }}さん</li>
+        <li class="ml-5"><a href="{% url 'logout'%}">ログアウト</a></li>
+        {% else %}
+        <li class="ml-5"><a href="{% url 'login'%}">ログイン</a></li>
+        <li class="ml-5"><a href="{% url 'signup'%}">ユーザ登録</a></li>
+        {% endif %}
+      </ul>
+      </div>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <div class="container">
+      <main>
+        <!-- メッセージがある場合は表示する -->
+        {% if messages %}
+        <div class="alert alert-success js-alert" id="js-alert">
+          <button class="alert-btn-close js-alert-close" type="button">×</button>
+          {% for message in messages %}
+            <p> {{ message|linebreaks }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+
+</body>
+
+<script type="text/javascript">
+  // ×を押して閉じられるようにする
+  for (const element of document.querySelectorAll('.js-alert > .js-alert-close')) {
+    element.addEventListener('click', e => {
+      e.target.parentElement.classList.add('is-hidden');
+    });
+  }
+</script>
+
+</html>

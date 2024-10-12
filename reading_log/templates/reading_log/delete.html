@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+<p class="mt-5"> 本当に削除してよろしいですか？</p>
+
+<p class="mt-4">書籍：{{ object.book }}</p>
+<p class="mt-4">状態：{{ object.status }}</p>
+<p class="mt-4">摘要： {% if object.description %}{{ object.description }}{% endif %}</p>
+
+<form class="mt-4" method="post">
+  {% csrf_token %}
+  <a class="btn btn-primary btn-lg" href="{% url 'reading_log:individual_log' user.id %}">
+    いいえ、一覧に戻ります
+  </a>
+  <button type="submit" class="btn btn-danger btn-lg">
+    はい、削除します
+  </button>
+</form>
+
+{% endblock %}

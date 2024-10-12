@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load reading_log %}
+
+{% block content %}
+
+<ul class="list-group mb-4">
+  <li class="list-group-item"> {{ page_user_name }}さんのダッシュボード </li>
+</ul>
+
+<div class="alert alert-primary">
+  {{ finished_message | linebreaksbr }}
+</div>
+<div class="alert alert-secondary">
+  {{ stacked_message | linebreaksbr }}
+</div>
+
+{% autoescape off %}
+{{ transition_plot }}
+{% endautoescape %}
+
+{% endblock %}
+
+{% block extrajs %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+{% endblock %}
