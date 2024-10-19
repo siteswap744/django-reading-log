@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="text-center my-5">
+  <div class="mb-5">
+    <p class="search-result mt-3"> 「{{ key_word }}」の検索結果 </p>
+  </div>
+  <div class="row">
+    {% for book in book_data %}
+      <div class="col-3 mb-4">
+        <div class="card img-thumbnail booklist h-100">
+          <a href="{% url 'reading_log:book_detail' book.isbn %}">
+            <img class="card-img-top card-thum" src="{{ book.image }}" alt="{{ book.title }}" loading="lazy">
+          </a>
+          <div class="card-body text-center px-2 py-3">
+            <h4 class="font-weight-bold">{{ book.title }}</h4>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>該当するものはありません</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
+

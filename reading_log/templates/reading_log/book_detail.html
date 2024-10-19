@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <img src="{{ book_data.image }}" alt="{{ book_data.title }}" loading="lazy">
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body px-2 py-1">
+          <div class="p-4">
+            <h3>タイトル：{{ book_data.title }}</h3>
+            <h3>著者：{{ book_data.author }}</h3>
+            <hr>
+            <form method="POST">
+              {% csrf_token %}
+              {{ form }}
+              <button class="btn btn-primary btn-lg mt-4" type="submit" name="button">書籍追加</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  {% if book_data.itemCaption %}
+    <div class="mb-5">
+      <h3>概要</h3>
+      <hr>
+      <p>{{ book_data.itemCaption }}</p>
+    </div>
+  {% endif %}
+
+  <div class="mb-5">
+    <h3>情報</h3>
+    <hr>
+    <p>発売日：{{ book_data.salesDate }}</p>
+    <p>価格：{{ book_data.price }}円</p>
+    <p>出版社：{{ book_data.publisherName }}</p>
+    <p>発行形式：{{ book_data.size }}</p>
+    <p>ISBN-10：{{ book_data.isbn }}</p>
+  </div>
+</div>
+
+{% endblock %}

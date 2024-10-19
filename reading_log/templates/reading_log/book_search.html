@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>追加したい書籍を検索してください</h1>
+<form method="post">
+  {% csrf_token %}
+  {% for field in form %}
+  <div class="mt-4">
+    {{ field.label }}
+    {{ field }}
+  </div>
+  {% endfor %}
+  <button class="btn btn-primary btn-lg mt-4" type="submit" name="button">検索</button>
+</form>
+
+{% endblock %}
